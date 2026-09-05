@@ -41,3 +41,28 @@ body {
         transform: rotate(360deg);
     }
 }
+
+@media (max-width: 500px) {
+    .sh5 {
+    position: absolute;
+    top: -400px;
+    right: -20%;
+    animation: spin 10s linear infinite;
+}
+
+.sh12 {
+    position: absolute;
+    bottom: -700px;
+    left: -5%;
+    animation: spin 10s linear infinite;
+}
+
+h1.zalupa {
+    font-size: 32px;
+    font-family: 'DrukWideCur', sans-serif;
+    text-align: center;
+    padding-top: 100%;
+    color: #4F378A;
+}
+
+}
