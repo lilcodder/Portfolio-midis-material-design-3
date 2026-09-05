@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'DrukWideCur';
+  src: url('drukwidecyr-bold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+h1.zalupa {
+    font-size: 32px;
+    font-family: 'DrukWideCur', sans-serif;
+    text-align: center;
+    padding-top: 20%;
+    color: #4F378A;
+}
+
+body {
+    background-color: #EADDFF;
+    position: relative;
+    overflow: hidden;
+}
+
+.sh5 {
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    animation: spin 10s linear infinite;
+}
+
+.sh12 {
+    position: absolute;
+    bottom: -600px;
+    left: -100px;
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
