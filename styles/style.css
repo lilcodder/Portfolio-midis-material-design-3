@@ -1,68 +1,233 @@
 @font-face {
   font-family: 'DrukWideCur';
-  src: url('drukwidecyr-bold.woff2') format('woff2');
+  src: url('../drukwidecyr-bold.woff2') format('woff2'),
+       url('drukwidecyr-bold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #EADDFF;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main_container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1280px;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  width: 100%;
+  text-align: center;
 }
 
 h1.zalupa {
-    font-size: 32px;
-    font-family: 'DrukWideCur', sans-serif;
-    text-align: center;
-    padding-top: 20%;
-    color: #4F378A;
+  font-family: 'DrukWideCur', 'Arial Black', sans-serif;
+  color: #4F378A;
+  text-align: center;
+  line-height: 1.25;
+  word-break: break-word;
+  font-size: 40px;
 }
 
-body {
-    background-color: #EADDFF;
-    position: relative;
-    overflow: hidden;
+.md3__deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .sh5 {
-    position: absolute;
-    top: -200px;
-    right: -200px;
-    animation: spin 10s linear infinite;
+  position: absolute;
+  top: -160px;
+  right: -160px;
+  width: 480px;
+  height: auto;
+  animation: spin 12s linear infinite;
+  will-change: transform;
 }
 
 .sh12 {
-    position: absolute;
-    bottom: -600px;
-    left: -100px;
-    animation: spin 10s linear infinite;
+  position: absolute;
+  bottom: -150px;
+  left: -130px;
+  width: 420px;
+  height: auto;
+  animation: spin 12s linear infinite;
+  will-change: transform;
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-@media (max-width: 500px) {
-    .sh5 {
-    position: absolute;
-    top: -400px;
-    right: -20%;
-    animation: spin 10s linear infinite;
+/* ===================================================
+   Брейкпоинты адаптивности (Desktop-First)
+   =================================================== */
+
+/* Ноутбуки и мониторы средней ширины (<= 1200px) */
+@media (max-width: 1200px) {
+  h1.zalupa {
+    font-size: 34px;
+  }
+
+  .sh5 {
+    width: 420px;
+    top: -140px;
+    right: -140px;
+  }
+
+  .sh12 {
+    width: 360px;
+    bottom: -130px;
+    left: -110px;
+  }
 }
 
-.sh12 {
-    position: absolute;
-    bottom: -700px;
-    left: -5%;
-    animation: spin 10s linear infinite;
+/* Планшеты (<= 992px) */
+@media (max-width: 992px) {
+  h1.zalupa {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+
+  .sh5 {
+    width: 340px;
+    top: -110px;
+    right: -110px;
+  }
+
+  .sh12 {
+    width: 300px;
+    bottom: -100px;
+    left: -90px;
+  }
 }
 
-h1.zalupa {
-    font-size: 32px;
-    font-family: 'DrukWideCur', sans-serif;
-    text-align: center;
-    padding-top: 100%;
-    color: #4F378A;
+/* Небольшие планшеты и крупные телефоны (<= 768px) */
+@media (max-width: 768px) {
+  .content {
+    padding: 20px 16px;
+  }
+
+  h1.zalupa {
+    font-size: 22px;
+    line-height: 1.35;
+  }
+
+  .sh5 {
+    width: 270px;
+    top: -90px;
+    right: -90px;
+  }
+
+  .sh12 {
+    width: 240px;
+    bottom: -80px;
+    left: -70px;
+  }
 }
 
+/* Смартфоны (<= 480px) */
+@media (max-width: 480px) {
+  .content {
+    padding: 16px 12px;
+  }
+
+  h1.zalupa {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .sh5 {
+    width: 200px;
+    top: -65px;
+    right: -65px;
+  }
+
+  .sh12 {
+    width: 180px;
+    bottom: -60px;
+    left: -50px;
+  }
+}
+
+/* Сверхкомпактные смартфоны (<= 360px) */
+@media (max-width: 360px) {
+  h1.zalupa {
+    font-size: 15px;
+  }
+
+  .sh5 {
+    width: 160px;
+    top: -55px;
+    right: -55px;
+  }
+
+  .sh12 {
+    width: 150px;
+    bottom: -50px;
+    left: -45px;
+  }
+}
+
+/* Ландшафтная ориентация для мобильных устройств */
+@media (max-height: 500px) and (orientation: landscape) {
+  h1.zalupa {
+    font-size: 20px;
+  }
+
+  .sh5 {
+    width: 180px;
+    top: -70px;
+    right: -70px;
+  }
+
+  .sh12 {
+    width: 160px;
+    bottom: -60px;
+    left: -50px;
+  }
+}
+
+/* Отключение анимаций при системном запросе reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .sh5, .sh12 {
+    animation: none;
+  }
 }
