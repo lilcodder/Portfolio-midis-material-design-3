@@ -58,6 +58,16 @@ h1.zalupa {
   font-size: 40px;
 }
 
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(22px) scale(0.96);
+  filter: blur(8px);
+  animation: wordFadeIn 0.85s cubic-bezier(0.05, 0.7, 0.1, 1.0) forwards;
+  animation-delay: calc(var(--i) * 0.22s);
+  will-change: opacity, transform, filter;
+}
+
 .md3__deco {
   position: absolute;
   inset: 0;
@@ -227,7 +237,18 @@ h1.zalupa {
 
 /* Отключение анимаций при системном запросе reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .sh5, .sh12 {
+  .sh5, .sh12, .word {
     animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes wordFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
