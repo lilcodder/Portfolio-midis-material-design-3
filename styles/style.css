@@ -20,6 +20,11 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.zalupa {
+  font-family: 'DrukWideCur', 'Arial Black', sans-serif;
+  color: #4F378A;
+}
+
 .main_container {
   position: fixed;
   top: 0;
@@ -38,7 +43,6 @@ html, body {
 }
 
 .centered_y p {
-  /* Важно для предсказуемой анимации */
   transform-origin: center center;
   will-change: transform;
 }
@@ -71,7 +75,7 @@ html, body {
   pointer-events: none;
   z-index: -1;
   overflow: hidden;
-  will-change: opacity; /* Добавь вот это для оптимизации */
+  will-change: opacity;
 }
 
 .sh5 {
@@ -115,61 +119,130 @@ html, body {
   padding: 120px 50px 50px 50px;
 }
 
+/* === ОБЩАЯ СЕТКА КАРТОЧЕК === */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 416px);
+  justify-content: center;
+  gap: 16px;
+  max-width: 950px;
+  margin: 0 auto;
+  align-items: start; /* Не тянет соседние карточки по высоте */
+}
+
+/* === ВНУТРЕННЯЯ РАЗМЕТКА КАРТОЧКИ === */
 .card {
-    background-color: #FEF7FF;
-    border: 1px solid #EADDFF;
-    border-radius: 12px;
-    padding: 10px;
-    display: grid;
-    width: 416px;
-    grid-template-columns: 1fr auto; 
-    gap: 16px;
+  background-color: #FEF7FF;
+  border: 1px solid #CAC4D0;
+  border-radius: 12px;
+  padding: 16px;
+  width: 416px;
+  height: fit-content; /* Высота строго по контенту */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
+  row-gap: 12px;
+  column-gap: 16px;
+  align-items: start;
+}
+
+.name {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #1D1B20;
+  align-self: center;
+}
+
+.status {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+
+.status img {
+  padding-right: 5px;
+}
+
+.status.ready {
+  border: 1px solid #1B5E20;
+  background-color: #DCE7DB;
+  color: #1B5E20;
+  padding: 6px 12px;
 }
 
 .desc {
-  max-width: 227px;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  max-width: 240px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #49454F;
 }
 
-.card.status {
+.gobutton {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  justify-self: end;
+  align-self: end;
+}
+
+.card button {
+  border: 1px solid #CAC4D0;
+  background-color: #E8DEF8;
+  color: #4F378B;
+  padding: 8px 16px;
   border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(5, 1fr); 
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
-  max-width: 950px;
-  margin: 0 auto;
-  padding-left: 60px;
+.card button:hover {
+  background-color: #D0BCFF;
 }
 
+.card button img {
+  padding-right: 8px;
+}
+
+/* === АНИМАЦИИ === */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
 @keyframes bottomDeco_levitation {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
 }
 
-/* Адаптив шрифтов оставляю твой, но анимация в JS может потребовать подстройки под мобилки */
+/* === АДАПТИВНОСТЬ === */
 @media (max-width: 1200px) {
   .primary_text { font-size: 72px; }
   .secondary_text { font-size: 48px; }
   .tretiary_text { font-size: 24px; }
 }
+
 @media (max-width: 992px) {
   .primary_text { font-size: 56px; }
   .secondary_text { font-size: 36px; }
   .tretiary_text { font-size: 20px; }
+  
+  .cards {
+    grid-template-columns: 416px; /* В 1 столбец */
+  }
 }

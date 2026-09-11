@@ -1,13 +1,14 @@
-// scroll.js
 const primary = document.querySelector('.primary_text');
 const secondary = document.querySelector('.secondary_text');
 const tretiary = document.querySelector('.tretiary_text');
 const bottomElements = document.querySelector('.bottom_elements');
 const md3Deco = document.querySelector('.md3__deco');
 
-// Находим сами кляксы, чтобы управлять их вращением
 const sh5 = document.querySelector('.sh5');
 const sh12 = document.querySelector('.sh12');
+
+// Собираем все наши карточки
+const allCards = document.querySelectorAll('.card');
 
 const SCROLL_DISTANCE = 350; 
 
@@ -37,12 +38,10 @@ function render() {
     let moveX3 = 0; 
     let moveY3 = -430 * progress; 
 
-    // Применяем математику
     if (primary) primary.style.transform = `translate(${moveX1}px, ${moveY1}px) scale(${scale1})`;
     if (secondary) secondary.style.transform = `translate(${moveX2}px, ${moveY2}px) scale(${scale2})`;
     if (tretiary) tretiary.style.transform = `translate(${moveX3}px, ${moveY3}px) scale(${scale3})`;
     
-    // Прозрачность элементов
     if (bottomElements) {
         bottomElements.style.opacity = Math.max(1 - progress * 3, 0);
     }
@@ -50,17 +49,44 @@ function render() {
         md3Deco.style.opacity = 1 - (0.5 * progress);
     }
 
-    // === ПЛАВНАЯ ОСТАНОВКА КЛЯКС ===
-    // Высчитываем скорость: 1 - это нормальная скорость, 0 - полная остановка
     let currentPlaybackRate = Math.max(0, 1 - progress);
     
-    // Применяем скорость ко всем запущенным анимациям на элементах
     if (sh5) {
         sh5.getAnimations().forEach(anim => anim.playbackRate = currentPlaybackRate);
     }
     if (sh12) {
         sh12.getAnimations().forEach(anim => anim.playbackRate = currentPlaybackRate);
     }
+
+    // === 3D-ОТКИДЫВАНИЕ И ЗАТУХАНИЕ КАРТОЧЕК ===
+    // Точка в пикселях от верхнего края окна, где карточка начинает исчезать
+    const DISAPPEAR_START = 180; 
+    // Точка, где карточка должна полностью раствориться и повернуться
+    const DISAPPEAR_END = 50;   
+
+    allCards.forEach(card => {
+        // Получаем реальные координаты карточки на экране
+        const rect = card.getBoundingClientRect();
+        const cardTop = rect.top;
+
+        if (cardTop < DISAPPEAR_START) {
+            // Считаем прогресс затухания от 0 (еще нормальная) до 1 (полностью исчезла)
+            let exitProgress = (DISAPPEAR_START - cardTop) / (DISAPPEAR_START - DISAPPEAR_END);
+            exitProgress = Math.max(0, Math.min(exitProgress, 1));
+
+            // Поворачиваем назад до 35 градусов и чуть отдаляем (scale 0.85)
+            let rotateX = exitProgress * 35;
+            let cardScale = 1 - (exitProgress * 0.15);
+            let opacity = 1 - exitProgress;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) scale(${cardScale})`;
+            card.style.opacity = opacity;
+        } else {
+            // Если карточка ниже критической отметки — она полностью видна и прямая
+            card.style.transform = 'perspective(1000px) rotateX(0deg) scale(1)';
+            card.style.opacity = 1;
+        }
+    });
 
     requestAnimationFrame(render);
 }
